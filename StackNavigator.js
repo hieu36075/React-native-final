@@ -2,21 +2,27 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./app/screens/HomeScreen";
+import HomeScreen from "./app/screens/home/HomeScreen";
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationContainer } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 import SavedScreen from "./app/screens/SavedScreen";
 import BookingScreen from "./app/screens/BookingScreen";
-import ProfileScreen from "./app/screens/ProfileScreen";
+import MenuScreen from "./app/screens/menu/MenuScreen";
 import { SafeAreaView } from 'react-native';
 import FocusedStatusBar from "./app/components/FocusedStatusBar";
 import Header from "./app/layout/header";
 import LoginScreen from "./app/screens/LoginScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
+import OnboardingScreen from "./app/screens/OnboardingScreen";
+import { useSelector } from "react-redux";
+import SearchScreen from "./app/screens/search/SearchScreen";
+import ListScreen from "./app/screens/ListScreen/ListScreen";
+import DetailsScreen from "./app/screens/details/DetailsScreen";
 const StackNavigator =() =>{
     const Tab = createBottomTabNavigator();
+    const {isLogin} = useSelector((state) => state.auth)
     const Stack = createNativeStackNavigator();
     function BottomTabs() {
         return (
@@ -67,10 +73,10 @@ const StackNavigator =() =>{
             />
     
             <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
+              name="Menu"
+              component={MenuScreen}
               options={{
-                tabBarLabel: "Profile",
+                tabBarLabel: "Menu",
                 headerShown: false,
                 tabBarIcon: ({ focused }) =>
                   focused ? (
@@ -89,9 +95,20 @@ const StackNavigator =() =>{
         {/* <Header navigation={null} /> */}
         <FocusedStatusBar backgroundColor="#003580"  />
             <Stack.Navigator screenOptions={{headerShown: false}}>
+              {isLogin ? (
+                <>
+                {/* <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
+                <Stack.Screen name="SearchScreen" component={SearchScreen}/>
+                <Stack.Screen name="ListScreen" component={ListScreen}/> */}
+                <Stack.Screen name="DetailsScreen" component={DetailsScreen}/>
+                </>
+              ) : (
+                <>
+                <Stack.Screen name="OnScreen" component={OnboardingScreen} /> 
                 <Stack.Screen name="Login" component={LoginScreen} />   
                 <Stack.Screen name="Register" component={RegisterScreen} />   
-                <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
+                </>
+              )}
             </Stack.Navigator>
         </NavigationContainer>
     </SafeAreaView>

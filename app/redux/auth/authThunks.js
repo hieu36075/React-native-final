@@ -5,10 +5,10 @@ import axios from "axios"
 export const login = createAsyncThunk('auth/login', async(data, {rejectWithValue})=>{
     try {
         // console.log(data)
-        const reponse = await axios.post('http://192.168.31.246:3500/auth/login', data)
-        console.log(reponse.data.accessToken)
+        const reponse = await http.post('/auth/login', data)
+        console.log(reponse)
 
-        return reponse.data.accessToken
+        return reponse
     } catch (error) {
         if (error.response && error.response.data) {
             return rejectWithValue(error.response.data);

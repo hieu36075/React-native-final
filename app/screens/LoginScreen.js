@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import {  AntDesign } from '@expo/vector-icons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -8,6 +8,7 @@ import InputField from '../components/InputField';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/auth/authThunks';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const {token} = useSelector(state => state.auth)
@@ -18,8 +19,9 @@ const LoginScreen = ({ navigation }) => {
   });
   const handleLogin = () => {
       dispatch(login(account))
+
   }
-  
+
   return (
     <View style={{ paddingHorizontal: 25 }}>
       <View style={{ alignItems: 'center' }}>

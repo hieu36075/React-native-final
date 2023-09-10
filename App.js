@@ -3,8 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import StackNavigator from './StackNavigator';
 import { Provider } from 'react-redux';
 import store from './app/redux/store';
+
 // import store from './app/redux/store';
 export default function App() {
+  
   return (
     <Provider store={store}>
       <StackNavigator/>
