@@ -8,8 +8,9 @@ import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from "jwt-decode";
 import store from '../redux/store';
-import { setIsLogin } from '../redux/auth/authSlice';
+import { setIsLogin, setToken } from '../redux/auth/authSlice';
 import { useSelector } from 'react-redux';
+
 const OnboardingScreen = () => {
     const navigation = useNavigation();
     const {isLogin} = useSelector((state) => state.auth)
@@ -19,11 +20,12 @@ const OnboardingScreen = () => {
           try {
             const token = await AsyncStorage.getItem('token');
             if (token !== null) {
-                const decodedToken = jwt_decode(token)
-                const currentDate = new Date().getTime();
-                const isTokenExpired = decodedToken.exp * 1000 < currentDate;
-                store.dispatch(setIsLogin(!isTokenExpired))
-
+              
+              const decodedToken = jwt_decode(token)
+              const currentDate = new Date().getTime();
+              const isTokenExpired = decodedToken.exp * 1000 < currentDate;
+              // store.dispatch(setToken(token))
+              store.dispatch(setIsLogin(!isTokenExpired))
             } else {
                 store.dispatch(setIsLogin(false))
               console.log('Token không tồn tại.');

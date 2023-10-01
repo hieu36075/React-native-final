@@ -66,6 +66,7 @@ const hotelSlice = createSlice({
         });
         builder.addCase(getHotelById.fulfilled, (state, action) => {
             state.loading = false
+            // console.log(action.payload)
             state.details = action.payload
             state.error = ""
         });

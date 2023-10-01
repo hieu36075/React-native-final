@@ -7,7 +7,7 @@ const HotelItem =({data}) =>{
             <Image source={{uri: data?.images[0]?.url}} style={styles.image}/>
             <Text style={styles.textName}>{data?.name}</Text>
             <Text style={styles.textPrice}>
-                $ {data?.rooms[0].price}
+                $ {data?.rooms[0].price} /1 night
             </Text>
         </View>
     )

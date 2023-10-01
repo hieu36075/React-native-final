@@ -3,7 +3,7 @@ import { login } from "./authThunks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState ={
-    isLogin: true, // Đặt giá trị ban đầu là false
+    isLogin: false, // Đặt giá trị ban đầu là false
     loading: false,
     error: '',
     token: []
@@ -15,10 +15,17 @@ const authSlice = createSlice({
     reducers:{
         logout:(state,action)=>{
             // localStorage.removeItem('token')
+            console.log('a')
+            AsyncStorage.removeItem('token');
+            state.isLogin = false
         },
         setIsLogin: (state, action) => {
             state.isLogin = action.payload;
         },
+        setToken: (state, action)=>{
+            state.token = action.payload
+            console.log(state.token)
+        }
     },
     extraReducers: builder=>{
         builder.addCase(login.pending,(state,action)=>{
@@ -27,9 +34,8 @@ const authSlice = createSlice({
         builder.addCase(login.fulfilled, (state, action) =>{
             state.isLogin= true
             state.loading=false
-            console.log(action.payload.access_token)
             AsyncStorage.setItem('token', action.payload.access_token)
-            state.token = action.payload
+            state.token = action.payload.access_token
             state.error = ''
         })
         builder.addCase(login.rejected, (state,action) =>{
@@ -52,5 +58,5 @@ const authSlice = createSlice({
     }
 });
 
-export const {setIsLogin, logOut } = authSlice.actions;
+export const {setIsLogin, logout, setToken } = authSlice.actions;
 export default authSlice.reducer

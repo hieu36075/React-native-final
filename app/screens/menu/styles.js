@@ -37,7 +37,19 @@ const styles = StyleSheet.create({
   },
   text_action:{
     marginLeft: 10
-  }
+  },
+  inputs:{
+    padding:10
+},
+  inputContainer: {
+    borderColor:'black',
+    borderWidth:1, 
+    borderRadius:20,  
+    backgroundColor:'#FFFFFF',
+    height:45,
+    width:'100%',
+    marginVertical:10,
+},
 });
 
 export default styles;

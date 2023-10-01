@@ -20,6 +20,13 @@ import { useSelector } from "react-redux";
 import SearchScreen from "./app/screens/search/SearchScreen";
 import ListScreen from "./app/screens/ListScreen/ListScreen";
 import DetailsScreen from "./app/screens/details/DetailsScreen";
+import RoomScreen from "./app/screens/roomScreen/RoomScreen";
+import BillScreen from "./app/screens/bill/BillScreen";
+import ConfirmPaymentScreen from "./app/screens/confirmPaymentScreen/ConfirmPaymentScreen";
+import ChatScreen from "./app/screens/chat/ChatScreen";
+import MessageScreen from "./app/screens/messageScreen/MessageScreen";
+import { Feather } from '@expo/vector-icons';
+import MapListScreen from "./app/screens/mapListScreen/MapListScreen";
 const StackNavigator =() =>{
     const Tab = createBottomTabNavigator();
     const {isLogin} = useSelector((state) => state.auth)
@@ -43,16 +50,18 @@ const StackNavigator =() =>{
             />
     
             <Tab.Screen
-              name="Saved"
-              component={SavedScreen}
+              name="ChatScreen"
+              component={ChatScreen}
               options={{
                 tabBarLabel: "Saved",
                 headerShown: false,
                 tabBarIcon: ({ focused }) =>
                   focused ? (
-                    <AntDesign name="heart" size={24} color="#003580" />
+                    // <Feather name="message-circle" size={24} color="#003580" />
+                    <AntDesign name="message1" size={24} color="#003580" />
                   ) : (
-                    <AntDesign name="hearto" size={24} color="black" />
+                    // <Feather name="message-circle" size={24} color="white" />
+                    <AntDesign name="message1" size={24} color="black" />
                   ),
               }}
             />
@@ -97,10 +106,17 @@ const StackNavigator =() =>{
             <Stack.Navigator screenOptions={{headerShown: false}}>
               {isLogin ? (
                 <>
-                {/* <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
+                <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
                 <Stack.Screen name="SearchScreen" component={SearchScreen}/>
-                <Stack.Screen name="ListScreen" component={ListScreen}/> */}
-                <Stack.Screen name="DetailsScreen" component={DetailsScreen}/>
+                <Stack.Screen name="ListScreen" component={ListScreen}/>
+                <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{headerShown:true}}/>
+                <Stack.Screen name="RoomScreen" component={RoomScreen} options={{headerShown:true}}/>
+                <Stack.Screen name="ConfirmPaymentScreen" component={ConfirmPaymentScreen} options={{headerShown:true}}/>
+                <Stack.Screen name="BillScreen" component={BillScreen} options={{headerShown:true}}/>
+                <Stack.Screen name="ChatScreen" component={ChatScreen}/>
+                <Stack.Screen name="MessageScreen" component={MessageScreen}/>
+                <Stack.Screen name="MapListScreen" component={MapListScreen}/>
+
                 </>
               ) : (
                 <>

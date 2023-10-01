@@ -30,7 +30,6 @@ const HomeScreen = () => {
     useEffect(()=>{
       if(useRefresh.isRefreshing){
         dispatch(getHotels({page:1, perPage:5}))
-        console.log("da chay")
       }
     },[useRefresh.isRefreshing])
     const handleSearch = () => {
@@ -98,14 +97,16 @@ const HomeScreen = () => {
           Hotel
         </Text>
           <View style={{marginTop:20}}>
-            <FlatList 
-              data={hotel} 
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({item, index})=>{
-                return <HotelItem data={item}/>;
-              }}
-              />
+            {hotel ? (
+              <FlatList 
+                data={hotel} 
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({item, index})=>{
+                  return <HotelItem data={item}/>;
+                }}
+                />
+            ) : ('')}
           </View>
       </View>
 

@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   textPrice:{
     fontSize: 18,
     fontWeight: '600',
-    marginTop: 10
+    marginTop: 10,
+    marginLeft: 10
   }
 });
 

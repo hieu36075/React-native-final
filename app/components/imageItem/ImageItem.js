@@ -5,6 +5,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { FlatList } from "react-native";
 const ImageItem = ({data}) =>{
     const [showMore, setShowMore] = useState(false)
+
+    if (!data || !data.images) {
+      return <Text>Data or images are undefined.</Text>;
+    }
+
+
     if(showMore){
         return(
             <View style={styles.showMoreContainer}>
@@ -15,11 +21,11 @@ const ImageItem = ({data}) =>{
               </Pressable>
                 
               <FlatList
-                data={data}
+                data={data?.images}
                 scrollEnabled={false}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item?.id}
                 renderItem={({ item }) => (
-                  <Image key={item.id} style={styles.allImage} source={{ uri: item.imageUrl }} />
+                  <Image key={item?.id} style={styles.allImage} source={{ uri: item?.url }} />
                 )}
               />
             </View>
@@ -27,30 +33,30 @@ const ImageItem = ({data}) =>{
         )
     }
     return(
-        <View >
+        <View>
         <View>
           <Image
             style={styles.imageFirst}
-            source={{ uri: data[0].imageUrl }}
+            source={{ uri: data.images[0].url }}
           />
         </View>
         <View style={styles.thumbnailContainer}>
           <Image
             style={styles.thumbnailImage}
-            source={{ uri: data[1].imageUrl }}
+            source={{ uri:data.images[1]?  data.images[1].url : 'https://icon-library.com/images/null-icon/null-icon-3.jpg'  }}
           />
   
           <Image
             style={styles.thumbnailImage}
-            source={{ uri: data[2].imageUrl }}
+            source={{ uri: data.images[2] ? data.images[2].url : 'https://icon-library.com/images/null-icon/null-icon-3.jpg'  }}
           ></Image>
           <Image
             style={styles.thumbnailImage}
-            source={{ uri: data[3].imageUrl }}
+            source={{ uri:  data.images[3] ? data?.images[3].url : 'https://icon-library.com/images/null-icon/null-icon-3.jpg' }}
           ></Image>
           <Image
             style={styles.thumbnailImage}
-            source={{ uri: data[4].imageUrl }}
+            source={{ uri: data.images[4] ? data?.images[4].url : 'https://icon-library.com/images/null-icon/null-icon-3.jpg' }}
           ></Image>
           <Pressable style={styles.overlayText} onPress={()=>setShowMore(!showMore)}>
             <Text style={styles.textShowMore}>Show More </Text>

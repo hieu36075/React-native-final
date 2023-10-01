@@ -9,12 +9,14 @@ const SearchItem = ({ data }) => {
   const days = 1;
   const goToPostPage = (id) => {
     console.log(id);
-    navigation.navigate('DetailsScreen',{hotelid: id})
+    navigation.navigate('DetailsScreen',{hotelId: id})
   };
-  if (data.city) {
-    console.log(data.city.name);
-  } else {
-    console.log("Dữ liệu không đầy đủ hoặc không tồn tại");
+  if(!data){
+    return(
+      <View>
+        <Text>Null</Text>
+      </View>
+    )
   }
   return (
     <View style={styles.container}>

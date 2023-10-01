@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const styles = StyleSheet.create({
     imageFirst: {
         width: '100%',
-        aspectRatio: 16 / 9,
+        aspectRatio: 2 / 3,
         resizeMode: 'cover',
       },
     thumbnailContainer:{
@@ -62,14 +62,12 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     allImage: {
-        width: '100%',
-        aspectRatio: 16 / 9,
+        // width: '100%',
+        aspectRatio: 9/ 16,
         resizeMode: 'cover',
         borderRadius: 10,
         marginVertical: 10,
-        // marginTop: 10,
-        // width: 500,
-        // height: 500
+        margin: 20
       },
     imageItem:{
         height: '100%'
