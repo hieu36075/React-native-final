@@ -23,10 +23,12 @@ const ChatScreen = ({navigation}) => {
     useEffect(()=>{
         dispatch(getMyMessage()).unwrap()
         .then((res)=>{
-            setRoomId(res[0].id)
-            res.forEach(element => {
-                socket.emit('joinRoom', element.id)
-            });
+            if(res.length > 0){
+                setRoomId(res[0].id)
+                res.forEach(element => {
+                    socket.emit('joinRoom', element.id)
+                });
+            }
         })
     },[])
     if(loading){

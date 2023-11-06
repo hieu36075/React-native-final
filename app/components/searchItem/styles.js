@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   category:{
-    backgroundColor: '#ADD8E6', // Đặt màu nền màu xanh
+    backgroundColor: '#2E7CC3', // Đặt màu nền màu xanh
     padding: 5, // Đặt lề xung quanh phần tử
     borderRadius: 20, // Đặt viền bo tròn
     flexDirection: 'row', // Để căn chỉnh icon và văn bản cùng một hàng
@@ -35,13 +35,14 @@ const styles = StyleSheet.create({
   name:{
     fontSize: 18,
     lineHeight: 26,
+    fontWeight:'500',
   },
   description: {
     fontSize: 18,
     lineHeight: 26,
   },
   location:{
-
+    color:'#818181'
   },
   separator:{
     marginTop: 10,

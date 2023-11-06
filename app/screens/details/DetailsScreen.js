@@ -38,7 +38,7 @@ const DetailsScreen = ({ route, navigation }) => {
       headerShown: isAtTop ? false : true,
       title: details?.name,
       headerStyle: {
-        backgroundColor: "#89CFF0",
+        backgroundColor: "#005DB1",
         display: isAtTop ? "none" : "flex", // hide header if at the top
       },
       headerTintColor: "white",
@@ -148,7 +148,7 @@ const DetailsScreen = ({ route, navigation }) => {
               {details?.extraInfo}
             </Text>
             <Pressable style={styles.showMoreExtraInfo}>
-              <Text style={{ fontSize: 18, fontWeight: "bold", color: "blue" }}>
+              <Text style={{ fontSize: 18, fontWeight: "bold", color: "#005DB1" }}>
                 {" "}
                 Show more
               </Text>
@@ -161,10 +161,10 @@ const DetailsScreen = ({ route, navigation }) => {
         <View style={styles.footerPrice}>
           <Text style={styles.textFooter}>Price/1 Room/Night</Text>
           <Text style={styles.textPriceFooter}> 500USD</Text>
-          <Text style={{ marginLeft: 20 }}> Last Price</Text>
+          <Text style={{ marginLeft: 20, color:'white' }}> Last Price</Text>
         </View>
         {/* <Button title="as" style={styles.Button}/> */}
-        <TouchableOpacity style={styles.Button} onPress={handleBooking}>
+        <TouchableOpacity style={[styles.Button]} onPress={handleBooking}>
           <Text style={styles.textButton}>Choose Room</Text>
         </TouchableOpacity>
       </View>

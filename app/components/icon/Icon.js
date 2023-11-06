@@ -8,43 +8,43 @@ const Icon = ({ iconName }) => {
   // Sử dụng switch case để xác định icon tương ứng dựa trên tên tính năng
   switch (iconName) {
     case "Wifi":
-      iconComponent = <Ionicons name="wifi" size={30} color="blue" />;
+      iconComponent = <Ionicons name="wifi" size={30} color="#2E7CC3" />;
       break;
     case "Swimming pool":
-      iconComponent = <Ionicons name="water" size={30} color="blue" />;
+      iconComponent = <Ionicons name="water" size={30} color="#2E7CC3" />;
       break;
     case "Gym":
-      iconComponent = <Ionicons name="fitness" size={30} color="blue" />;
+      iconComponent = <Ionicons name="fitness" size={30} color="#2E7CC3" />;
       break;
     case "Spa":
-      iconComponent = <FontAwesome5 name="spa" size={30} color="blue" />;
+      iconComponent = <FontAwesome5 name="spa" size={30} color="#2E7CC3" />;
       break;
     case "Restaurant":
-      iconComponent = <Ionicons name="restaurant" size={30} color="blue" />;
+      iconComponent = <Ionicons name="restaurant" size={30} color="#2E7CC3" />;
       break;
     case "Bar":
       iconComponent = (
-        <FontAwesome5 name="cc-diners-club" size={30} color="blue" />
+        <FontAwesome5 name="cc-diners-club" size={30} color="#2E7CC3" />
       );
       break;
     case "24/7 room service":
       iconComponent = (
-        <MaterialIcons name="room-service" size={30} color="blue" />
+        <MaterialIcons name="room-service" size={30} color="#2E7CC3" />
       );
       break;
     case "Free breakfast":
       iconComponent = (
-        <MaterialIcons name="breakfast-dining" size={30} color="blue" />
+        <MaterialIcons name="breakfast-dining" size={30} color="#2E7CC3" />
       );
       break;
     case "Parking":
       iconComponent = (
-        <MaterialIcons name="local-parking" size={30} color="blue" />
+        <MaterialIcons name="local-parking" size={30} color="#2E7CC3" />
       );
       break;
     case "Airport shuttle":
       iconComponent = (
-        <MaterialIcons name="airport-shuttle" size={30} color="blue" />
+        <MaterialIcons name="airport-shuttle" size={30} color="#2E7CC3" />
       );
       break;
     // Thêm các trường hợp cho các tính năng khác ở đây

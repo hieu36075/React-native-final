@@ -8,12 +8,22 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
     
     },
+    shadowStyle:{
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5, // Cho Android
+    },
     image: {
         width: 200, // Điều chỉnh kích thước chiều rộng theo nhu cầu của bạn
         aspectRatio: 3 / 2,
         resizeMode: 'cover',
         borderRadius: 10,
-        margin:10
+        margin:10,
       },
     infoContainer:{
         // flexDirection:'row',
@@ -35,28 +45,32 @@ const styles = StyleSheet.create({
     rightInfo:{
         marginRight: 10,
         marginTop: 5,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        flexDirection:'column'
     },
     button:{
-        borderWidth:1,
-        borderColor: '#3AA2FF',
-        borderRadius: 15,
+        // borderWidth:1,
+        borderColor: '2E7CC3',
+        borderRadius: 20,
         padding: 10,
-        marginTop: 5,
+        marginTop: 10,
         alignItems: 'center',
-        backgroundColor:'#3AA2FF',
-        marginTop: 20
+        backgroundColor:'#2E7CC3',
+        borderColor: '#3AA2FF',
+        justifyContent:'center',
+        elevation: 3
     },
     title:{
         fontSize: 18,
         lineHeight:26,
         fontWeight: 'bold',
-        margin:10
+        margin:10,
     },
     name:{
         fontSize: 16,
         fontWeight: 'bold',
-        margin:10
+        margin:10,
+        color:'#535353'
     },
     text:{
         fontSize: 14,

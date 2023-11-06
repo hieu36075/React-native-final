@@ -46,8 +46,8 @@ const SearchItem = ({ data }) => {
             {data?.name}
           </Text>
           <View style={styles.category}>
-            <MaterialIcons style={{marginLeft: 5}}name="hotel" size={24} color="#0096FF" />
-            <Text style={{marginLeft: 10, color: '#0096FF'}}>{data.category.name}</Text>
+            <MaterialIcons style={{marginLeft: 5}}name="hotel" size={24} color="white" />
+            <Text style={{marginLeft: 10, color: 'white'}}>{data.category.name}</Text>
           </View>
           <Text style={styles.location}>
             <Entypo name="location-pin" size={26} color="gray" />

@@ -8,7 +8,7 @@ let _store = store;
 
 // console.log(token)
 
-const socket = io('http://192.168.31.246:3500', {
+const socket = io('http://192.168.1.18:3500', {
   transportOptions: {
     polling: {
       extraHeaders: {

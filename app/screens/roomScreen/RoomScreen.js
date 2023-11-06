@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import {
   View,
   Image,
@@ -20,6 +20,7 @@ import moment from "moment";
 import Modal from "react-native-modal";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
 import { createOrder, updateOrder } from "../../redux/order/orderThunk";
+
 const RoomScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.categoryRoom);
@@ -44,7 +45,17 @@ const RoomScreen = ({ navigation, route }) => {
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title: 'Choose room',
+      headerStyle: {
+        backgroundColor: "#005DB1",
+        
+      },
+      headerTintColor: "white",
+    });
+  }, [navigation]);
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
   };
@@ -150,13 +161,15 @@ const RoomScreen = ({ navigation, route }) => {
               renderItem={({ item, index }) => {
                 return (
                   <Pressable>
+
                     <Image
                       key={item.id}
                       style={styles.image}
                       source={{
                         uri: item.url,
                       }}
-                    />
+                      />
+
                   </Pressable>
                 );
               }}
@@ -167,23 +180,25 @@ const RoomScreen = ({ navigation, route }) => {
               <View style={styles.leftInfo}>
                 <View style={styles.icon}>
                   <Octicons name="person" size={16} color="black" />
-                  <Text style={styles.text}>
+                  <Text style={[styles.text, {color: '#818181', fontWeight:'500'}]}>
                     {room.occupancy} person / 1 room
                   </Text>
                 </View>
                 <View style={styles.icon}>
                   <Ionicons name="md-bed-outline" size={16} color="black" />
-                  <Text style={styles.text}> {item.numberOrBeds} / bed</Text>
+                  <Text style={[styles.text, {color: '#818181', fontWeight:'500'}]}> {item.numberOrBeds} / bed</Text>
                 </View>
               </View>
               <View style={styles.separator}></View>
               <View style={styles.rightInfo}>
-                <Text style={styles.text}> {room.price}$ /1 night</Text>
+                <Text style={styles.text}>$ {room.price}</Text>
+                <Text style={{marginTop:5 ,color: '#818181', fontWeight:'400'}}>/room/night</Text>
+                <Text style={{marginTop:5,color: '#818181', fontWeight:'400'}}>Avaiable</Text>
                 <Pressable
                   style={styles.button}
                   onPress={() => handleChooseRoom(room.id, room.price)}
                 >
-                  <Text style={styles.submitButton}> Booking</Text>
+                  <Text style={{color: 'white'}}> Booking</Text>
                 </Pressable>
               </View>
             </View>

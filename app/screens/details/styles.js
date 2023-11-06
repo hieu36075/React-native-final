@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     categoryBorder:{
         borderWidth:1,
-        borderColor: 'blue',
+        borderColor: '#2E7CC3',
         borderRadius: 10,
         padding: 5,
         width: '30%',
@@ -75,12 +75,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'space-between',
         paddingHorizontal: 20,
-        backgroundColor: '#CBCACA',
+        backgroundColor: '#005DB1',
         borderTopColor:'black'
     },
     textFooter:{
         marginTop: 10,
         marginLeft: 20,
+        color:'white'
     },
     footerPrice:{
         flexDirection:'column',
@@ -89,21 +90,24 @@ const styles = StyleSheet.create({
     textPriceFooter:{
         marginLeft: 20,
         fontSize: 18,
-        color: '#FF5C3A'
+        color: '#FFE235',
+        fontWeight: '700'
     },
     Button:{
         borderWidth:1,
-        borderColor: '#3AA2FF',
-        borderRadius: 15,
+        borderColor: '#FFE235',
+        borderRadius: 20,
         padding: 10,
         width: '30%',
         marginTop: 5,
         alignItems: 'center',
-        backgroundColor:'#3AA2FF'
+        backgroundColor:'#FFE235',
+        shadowColor:'#000000',
+        elevation: 5
     },
     textButton:{
-        color: 'white',
-
+        color: '#005DB1',
+        fontWeight:'500'
     }
       
 });

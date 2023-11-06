@@ -102,7 +102,7 @@ const StackNavigator =() =>{
     <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
         {/* <Header navigation={null} /> */}
-        <FocusedStatusBar backgroundColor="#003580"  />
+        <FocusedStatusBar backgroundColor="#005DB1"  />
             <Stack.Navigator screenOptions={{headerShown: false}}>
               {isLogin ? (
                 <>
