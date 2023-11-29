@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "booking-project-final",
-    "slug": "booking-project-final",
+    "slug": "final",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,14 +22,24 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "config":{
-        "googleMaps":{
-          "apiKey": ""
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAIj8cpnZlMLOvGU8_k68rF4FK9yfWhc5o"
         }
-      }
+      },
+      "package": "com.anonymous.bookingprojectfinal"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6a0e2531-052c-48b6-a36e-a13c94af10ad"
+      }
+    },
+    "owner": "hieu36075"
   }
 }

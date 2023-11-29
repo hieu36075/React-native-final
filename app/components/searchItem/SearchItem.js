@@ -8,7 +8,6 @@ const SearchItem = ({ data }) => {
     const navigation = useNavigation()
   const days = 1;
   const goToPostPage = (id) => {
-    console.log(id);
     navigation.navigate('DetailsScreen',{hotelId: id})
   };
   if(!data){

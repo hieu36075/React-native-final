@@ -29,6 +29,9 @@ const roomSlice = createSlice({
         updateListUser: (state, action)=>{
 
         },
+        updateNewRoom: (state, action)=>{
+            state.data.push(action.payload)
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -83,5 +86,5 @@ const roomSlice = createSlice({
             })
     }
 });
-export const {addMessage} = roomSlice.actions
+export const {addMessage, updateNewRoom} = roomSlice.actions
 export default roomSlice.reducer

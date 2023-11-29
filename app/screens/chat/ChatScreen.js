@@ -11,10 +11,12 @@ import { getMyMessage } from "../../redux/roomMessage/roomMessageThunk";
 import { useState } from "react";
 import socket from "../../service/socket";
 import { useLayoutEffect } from "react";
-const ChatScreen = ({navigation}) => {
+import { useRef } from "react";
+const ChatScreen = ({navigation,route}) => {
     const dispatch = useDispatch();
     const [roomId, setRoomId] = useState('')
     const {data, loading} = useSelector((state) => state.roomMessage)
+    const endOfMessagesRef = useRef(null);
     useLayoutEffect(()=>{
         navigation.setOptions({
             headerShown: false,
@@ -24,13 +26,21 @@ const ChatScreen = ({navigation}) => {
         dispatch(getMyMessage()).unwrap()
         .then((res)=>{
             if(res.length > 0){
-                setRoomId(res[0].id)
+                // setRoomId(res[0].id)
                 res.forEach(element => {
                     socket.emit('joinRoom', element.id)
                 });
             }
         })
     },[])
+
+    useEffect(() => {
+        if (endOfMessagesRef.current) {
+            endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [data]); 
+
+    
     if(loading){
         return(
             <Text> loading</Text>
@@ -44,7 +54,6 @@ const ChatScreen = ({navigation}) => {
                     <Text style={styles.chatheading}>Chats</Text>
                 </View>
             </View>
-
             <View style={styles.chatlistContainer}>
                 {data?.length > 0 ? (
                     <FlatList
@@ -55,7 +64,6 @@ const ChatScreen = ({navigation}) => {
                 ) : (
                     <View style={styles.chatemptyContainer}>
                         <Text style={styles.chatemptyText}>No rooms created!</Text>
-                        <Text>Click the icon above to create a Chat room</Text>
                     </View>
                 )}
             </View>

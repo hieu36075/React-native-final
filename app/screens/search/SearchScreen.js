@@ -17,7 +17,7 @@ import { useFocusEffect } from "@react-navigation/native";
 const SearchScreen = ({ navigation }) => {
     const route = useRoute();
   const [searchQuery, setSearchQuery] = useState(route?.params ? route.params.searchQuery : '');
-  const [searchHistory, setSearchHistory] = useState([]); // Danh sách lịch sử tìm kiếm
+  const [searchHistory, setSearchHistory] = useState([]); 
   const searchInputRef = useRef(null);
     
   useFocusEffect(
@@ -29,10 +29,7 @@ const SearchScreen = ({ navigation }) => {
   );
 
   const handleSearch = () => {
-    // Chuyển đến màn hình danh sách kết quả và truyền dữ liệu tìm kiếm qua props
     navigation.navigate("ListScreen", { searchQuery });
-
-    // Lưu lịch sử tìm kiếm
     if (searchQuery) {
       setSearchHistory([...searchHistory, searchQuery]);
       setSearchQuery("");
@@ -111,7 +108,7 @@ const styles = StyleSheet.create({
   },
   container_search: {
     width: "100%",
-    backgroundColor: "#E5F5FF", // Màu nền xanh
+    backgroundColor: "#E5F5FF", 
     alignItems: "center",
     padding: 16,
     marginBottom: 16,
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white", // Màu nền trắng cho ô tìm kiếm
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 5,
   },
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   confirmText: {
-    color: "#007AFF", // Màu chữ xanh dương cho "Hoàn tất"
+    color: "#007AFF", 
   },
   historyContainer: {
     marginTop: 10,
@@ -153,11 +150,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   itemRow: {
-    flexDirection: "row", // Sắp xếp theo hàng ngang
-    alignItems: "center", // Căn giữa theo chiều dọc
+    flexDirection: "row", 
+    alignItems: "center", 
   },
   iconSpacer: {
-    width: 16, // Khoảng cách mong muốn giữa hai biểu tượng (có thể điều chỉnh)
+    width: 16,
   },
 });
 

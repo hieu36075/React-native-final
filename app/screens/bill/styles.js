@@ -7,11 +7,12 @@ const styles = StyleSheet.create({
     }, 
     headerContainer:{
         flex:1,
-        backgroundColor:'#5cb85c',
+        backgroundColor:'#2B9FDC',
         justifyContent: 'center',
         alignItems: 'center',
     },
     textHeader:{
+        
         margin:10,
         color: 'white'
     },
@@ -39,14 +40,13 @@ const styles = StyleSheet.create({
         margin:10
     },
     separator: {
-        width: '80%', // Độ rộng của đường kẻ dọc
+        width: '80%', 
         height: 1,
-        backgroundColor: 'black', // Màu của đường kẻ dọc
-        marginHorizontal: 0, // Khoảng cách giữa các nút và đường kẻ dọc
+        backgroundColor: 'black', 
+        marginHorizontal: 0, 
         alignSelf: 'center'
     },
     textTicket:{
-        // alignSelf: 'flex-start',
         margin:10,
     },
     infoTiket:{
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     infomationContainer:{
         flex:1,
         backgroundColor: 'white',
-        // marginBottom:10
     },
     title:{
         marginTop:10,
@@ -68,8 +67,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     address:{
-        // flex:1,
-        backgroundColor:'#9dd49d',
+        backgroundColor:'#2B9FDC',
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomLeftRadius: 15,

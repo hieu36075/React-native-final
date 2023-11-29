@@ -27,20 +27,20 @@ export default function InputField({
           keyboardType={keyboardType}
           style={{flex: 1, paddingVertical: 0}}
           secureTextEntry={true}
-          value={value} // Gán giá trị từ props
-          onChangeText={onChangeText} // Sử dụng hàm cập nhật giá trị từ props
+          value={value} 
+          onChangeText={onChangeText} 
         />
       ) : (
         <TextInput
           placeholder={label}
           keyboardType={keyboardType}
           style={{flex: 1, paddingVertical: 0}}
-          value={value} // Gán giá trị từ props
-          onChangeText={onChangeText} // Sử dụng hàm cập nhật giá trị từ props
+          value={value} 
+          onChangeText={onChangeText} 
         />
       )}
       <TouchableOpacity onPress={fieldButtonFunction}>
-        <Text style={{color: '#AD40AF', fontWeight: '700'}}>{fieldButtonLabel}</Text>
+        <Text style={{color: '#4d8bf0', fontWeight: '700'}}>{fieldButtonLabel}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 	chatheading: {
 		fontSize: 24,
 		fontWeight: "bold",
-		color: "green",
+		color: "#2E7CC3",
 	},
 	chattopContainer: {
 		backgroundColor: "white",
@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
 	chatlistContainer: {
 		// paddingHorizontal: 10,
 	},
+	chatemptyContainer:{
+		justifyContent:'center',
+		alignItems:'center'
+	}
       
 });
 

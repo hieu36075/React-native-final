@@ -5,7 +5,9 @@ import categoryRoomSlice from './categoryRoom/categoryRoomSlice';
 import orderSlice from './order/orderSlice';
 import paymentSlice from './payment/paymentSlice';
 import roomMessageSlice from './roomMessage/roomMessageSlice';
- // Đường dẫn đến reducer của bạn
+import notificationSlice from './notification/notificationSlice';
+import userSlice from './user/userSlice';
+import profileSlice from './profile/profileSlice';
 
 const store = configureStore({
   reducer: {
@@ -15,6 +17,9 @@ const store = configureStore({
     order: orderSlice,
     payment: paymentSlice,
     roomMessage: roomMessageSlice,
+    notification: notificationSlice,
+    user: userSlice,
+    profile: profileSlice
   },
 });
 

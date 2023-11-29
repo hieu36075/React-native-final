@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Pressable,
 } from "react-native";
 import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +32,7 @@ const ListScreen = ({ route, navigation }) => {
 
   const [searchData, setSearchData] = useState({
     countryId: "",
-    name: "",
+    name: searchQuery,
     categoryId: "",
     occupancy: 1,
     minPrice: 1,
@@ -39,7 +40,7 @@ const ListScreen = ({ route, navigation }) => {
   });
   const [tempMinPrice, setTempMinPrice] = useState(1);
   const [tempMaxPrice, setTempMaxPrice] = useState(99999);
-  const [priceRange, setPriceRange] = useState([100, 1000]); // Initial price range
+  const [priceRange, setPriceRange] = useState([100, 1000]); 
 
   const handleMinPriceChange = (value) => {
     setTempMinPrice(value);
@@ -57,19 +58,11 @@ const ListScreen = ({ route, navigation }) => {
     });
   };
 
-  // const handleMinPriceChange = (value) => {
-  //   setSearchData((prevSearchData) => ({
-  //     ...prevSearchData,
-  //     minPrice: value,
-  //   }));
-  // };
+  // useEffect(()=>{
+  //   setSearchData({...searchData, name: searchQuery});
+  // },[searchQuery])
 
-  // const handleMaxPriceChange = (value) => {
-  //   setSearchData((prevSearchData) => ({
-  //     ...prevSearchData,
-  //     maxPrice: value,
-  //   }));
-  // };
+
   const openFilter = () => {
     setShowFilter(true);
   };
@@ -79,19 +72,17 @@ const ListScreen = ({ route, navigation }) => {
   };
 
   const handleFilter = () => {
-    console.log("a");
     closeFilter();
   };
   const mapList = () =>{
     navigation.navigate('MapListScreen')
   }
   useEffect(() => {
-    const flechData = async () => {
-      await dispatch(searchHotel(searchData)).unwrap();
-    };
-    flechData();
+    dispatch(searchHotel(searchData))
   }, [searchData]);
-
+  // useEffect(()=>{
+  //   setSearchData({...searchData, name: searchQuery});
+  // },[searchQuery])
   return (
     <>
       <ScrollView>
@@ -108,7 +99,7 @@ const ListScreen = ({ route, navigation }) => {
                 <View style={styles.container_search}>
                   <View style={styles.searchBox}>
                     <Text style={styles.input}>{searchQuery}</Text>
-                    <Text style={styles.confirmText}>Hoàn tất</Text>
+                    <Text style={styles.confirmText}>Finish</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -134,7 +125,15 @@ const ListScreen = ({ route, navigation }) => {
             onClose={closeFilter}
             onOk={handleApply}
           >
+            <View>
+
             <View style={styles.filterContainer}>
+              <Pressable 
+                style={{flexDirection:'row', justifyContent:'flex-end'}}
+                onPress={closeFilter}
+              >
+                  <Text style={{justifyContent:'flex-end', margin: 5, paddingRight: 10}}>Close</Text>
+              </Pressable>
               <Text style={{ margin: 10 }}>Min Price: ${tempMinPrice}</Text>
               <View style={styles.containerTest}>
                 <Slider
@@ -146,7 +145,7 @@ const ListScreen = ({ route, navigation }) => {
                   onValueChange={handleMinPriceChange}
                   minimumTrackTintColor="blue"
                   maximumTrackTintColor="gray"
-                />
+                  />
               </View>
 
               <Text style={{ margin: 10 }}>Max Price: ${searchData.maxPrice}</Text>
@@ -163,11 +162,8 @@ const ListScreen = ({ route, navigation }) => {
                 />
               </View>
             </View>
+          </View>
           </ModalComponent>
-          <View style={styles.verticalSeparator}></View>
-          <TouchableOpacity style={styles.actionFilter}>
-            <Text style={styles.textFilter}>Sort</Text>
-          </TouchableOpacity>
           <View style={styles.verticalSeparator}></View>
           <TouchableOpacity style={styles.actionFilter} onPress={mapList}>
             <Text style={styles.textFilter}>Maps</Text>

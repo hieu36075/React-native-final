@@ -59,11 +59,6 @@ const MapListScreen = ({ navigation }) => {
   }, []);
 
   
-  //   if(data){
-  //     return(
-  //         <Text>loading..</Text>
-  //     )
-  //   }
   return (
     <View style={{ width: "100%", height: "100%" }}>
       {location ? (

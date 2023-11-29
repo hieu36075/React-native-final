@@ -1,12 +1,13 @@
-import {Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React from 'react';
 
-export default function CustomButton({label, onPress}) {
+export default function CustomButton({label, onPress,loading, ...props}) {
   return (
     <TouchableOpacity
       onPress={onPress}
+      {...props}
       style={{
-        backgroundColor: '#AD40AF',
+        backgroundColor: '#4d8bf0',
         padding: 20,
         borderRadius: 10,
         marginBottom: 30,
@@ -18,7 +19,8 @@ export default function CustomButton({label, onPress}) {
           fontSize: 16,
           color: '#fff',
         }}>
-        {label}
+          {loading ?  <ActivityIndicator size="small" color="white" /> : label}
+  
       </Text>
     </TouchableOpacity>
   );

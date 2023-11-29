@@ -41,7 +41,7 @@ const RoomScreen = ({ navigation, route }) => {
     label: `${index + 1} days`,
     value: index + 1,
   }));
-  // console.log(data)
+
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
@@ -82,7 +82,7 @@ const RoomScreen = ({ navigation, route }) => {
     setEndDate(newEndDate);
     toggleModal();
   };
-  //   console.log(data);
+
   useEffect(() => {
     dispatch(
       getCategoryRoomByHotel({
@@ -96,10 +96,9 @@ const RoomScreen = ({ navigation, route }) => {
   if (loading) {
     return <Text>loading</Text>;
   }
-  const vatRate = 0.1; // 10% VAT
+  const vatRate = 0.1; // 
   const serviceRate = 0.05;
 
-  // console.log(roomPrice)
 
   const isOrderChanged = (existingOrder, updatedOrder) => {
     const checkInChanged = existingOrder.checkIn !== updatedOrder.checkIn;
@@ -250,8 +249,11 @@ const RoomScreen = ({ navigation, route }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   padding: 10,
+                  paddingLeft:20,
+                  paddingRight:20
                 }}
               >
+                
                 <TouchableOpacity onPress={toggleModal}>
                   <Text style={{ color: "blue" }}>Hủy</Text>
                 </TouchableOpacity>
@@ -283,7 +285,7 @@ const RoomScreen = ({ navigation, route }) => {
             style={styles.actionFilter}
             onPress={toggleModalOption}
           >
-            <Text style={styles.textFilter}> Khachs</Text>
+            <Text style={styles.textFilter}> Occupancy</Text>
           </TouchableOpacity>
           <Modal
             isVisible={showOption}
@@ -304,6 +306,8 @@ const RoomScreen = ({ navigation, route }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   padding: 10,
+                  paddingLeft:20,
+                  paddingRight:20
                 }}
               >
                 <TouchableOpacity onPress={toggleModalOption}>

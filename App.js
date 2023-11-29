@@ -1,14 +1,19 @@
-import { StatusBar } from "expo-status-bar";
+
 import { StyleSheet, Text, View } from "react-native";
 import StackNavigator from "./StackNavigator";
 import { Provider } from "react-redux";
 import store from "./app/redux/store";
 import { StripeProvider } from '@stripe/stripe-react-native';
+;
 
-// import store from './app/redux/store';
+
 const STRIPE_KEY =
   "pk_test_51NegkOC0zJif8DInBG11CS3Q6BKxWNiCgJfLHv03zSjIUn6WRZd4qDTFP7Hvxf87F9Z8DabAl2hHxKMmp9gs7lq400m8CGZXCA";
+
+
+
 export default function App() {
+
   return (
     <Provider store={store}>
       <StripeProvider publishableKey={STRIPE_KEY}>

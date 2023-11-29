@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
-import { View, TextInput, Text, FlatList, Pressable } from "react-native";
+import { View, TextInput, Text, FlatList, Pressable, ToastAndroid } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MessageItem from "../../components/messageItem/MessageItem";
 import styles from "./styles";
@@ -7,9 +7,10 @@ import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { getMessageByRoomId } from "../../redux/roomMessage/roomMessageThunk";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../../redux/roomMessage/roomMessageSlice";
+import { addMessage, updateNewRoom } from "../../redux/roomMessage/roomMessageSlice";
 import socket from "../../service/socket";
 import { KeyboardAvoidingView } from "react-native";
+import { useRef } from "react";
 
 const MessageScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
@@ -17,12 +18,10 @@ const MessageScreen = ({ route, navigation }) => {
     const [user, setUser] = useState();
     const { details, loading } = useSelector((state) => state.roomMessage);
     const [token, setToken] = useState('');
-    // console.log(details)
-    //👇🏻 Access the chatroom's name and id
-    const { name, id } = route?.params || {};
-    
+    const endOfMessagesRef = useRef(null);
+    const [roomId, setRoomId] = useState(route?.params.id)
+    const { name } = route?.params || {};
 
-//👇🏻 This function gets the username saved on AsyncStorage
     const getUsername = async () => {
         try {
             const token = await AsyncStorage.getItem('token');
@@ -36,61 +35,102 @@ const MessageScreen = ({ route, navigation }) => {
         }
     };
 
-    //👇🏻 Sets the header title to the name chatroom's name
+
     useLayoutEffect(() => {
-        navigation.setOptions({headerShown: true, title: name });
+        navigation.setOptions({ headerShown: true, title: name });
         getUsername()
     }, []);
 
     useEffect(() => {
-        dispatch(getMessageByRoomId(id));
-      }, [id]);
+        if(roomId) {
+            dispatch(getMessageByRoomId(roomId));
+        }
+    }, [roomId]);
 
-    if(!details){
-        return(
+    useEffect(() => {
+        if (endOfMessagesRef.current && details?.message?.length > 0) {
+            endOfMessagesRef.current.scrollToEnd({ animated: true });
+        }
+    }, [details?.message]);
+
+    if (!details) {
+        return (
             <Text>loading</Text>
         )
     }
-      useEffect(()=>{
-        socket.on('message-received',(data)=>{
-        //   console.log('message:', data)
-          dispatch(addMessage(data))
+    useEffect(() => {
+        socket.on('message-received', (data) => {
+            dispatch(addMessage(data))
         })
-      },[])
+        return () => {
+            socket.off('message-received');
+        };
+    }, [])
+
+    useEffect(() => {
+        socket.on('newRoom-received', (data) => {
+            console.log(data)
+            dispatch(updateNewRoom(data.newRoom))
+            if (!roomId) {
+                setRoomId(data?.newRoom?.id)
+                socket.emit('joinRoom', data?.newRoom?.id)
+            }
+        })
+        return () => {
+            socket.off('newRoom-received');
+        };
+    }, [])
 
     const handleNewMessage = () => {
-        socket.emit('sendMessageNative', {
-            content: message,
-            roomId: id,
-            authencation: token
-          });
-        // console.log('a')
+        if (!message || message.trim() === "") {
+            ToastAndroid.show('Message is empty', ToastAndroid.SHORT); 
+            return; 
+          }
+        if (!roomId) {
+            socket.emit('messageNative', {
+                content: message,
+                userId: route?.params?.state?.userId,
+                authencation: token
+            });
+            setMessage("")
+        } else {
+            socket.emit('sendMessageNative', {
+                content: message,
+                roomId: roomId,
+                authencation: token
+            });
+            setMessage("")
+        }
     };
-    
+
+
     return (
-        <View style={styles.messagingscreen}>
-            <KeyboardAvoidingView
-                style={[
-                    styles.messagingscreen,
-                    { paddingVertical: 15, paddingHorizontal: 10 },
-                ]}
-            >
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+        >
+            <View style={styles.messagingscreen}>
                 {details && details?.message ? (
                     <FlatList
                         data={details?.message}
-                        renderItem={({ item }) => (
+                        ref={endOfMessagesRef}
+                        renderItem={({ item, index }) => (
                             <MessageItem item={item} user={user?.id} />
                         )}
                         keyExtractor={(item) => item?.id.toString()}
+                        onContentSizeChange={() => endOfMessagesRef.current?.scrollToEnd({ animated: true })}
+                        automaticallyAdjustKeyboardInsets={true}
                     />
                 ) : (
                     ""
                 )}
-            </KeyboardAvoidingView>
 
+            </View>
             <View style={styles.messaginginputContainer}>
                 <TextInput
                     style={styles.messaginginput}
+                    value={message}
                     onChangeText={(value) => setMessage(value)}
                 />
                 <Pressable
@@ -102,7 +142,7 @@ const MessageScreen = ({ route, navigation }) => {
                     </View>
                 </Pressable>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

@@ -17,7 +17,6 @@ const BookingScreen = ({navigation}) => {
   },[])
   return (
     <View style={styles.container}>
-      <Text>thagsn 9 /2023</Text>
       <View>
         <FlatList
           data={bookings}

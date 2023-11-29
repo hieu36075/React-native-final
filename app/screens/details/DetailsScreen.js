@@ -1,6 +1,5 @@
 import {
   Image,
-  ImageBackground,
   View,
   Text,
   Pressable,
@@ -20,42 +19,52 @@ import { getHotelById } from "../../redux/hotel/hotelThunks";
 import { useLayoutEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
-import RoomItem from "../../components/Room/RoomItem";
+import { getUsersById } from "../../redux/user/userThunks";
+import { getProfileById } from "../../redux/profile/profileThunk";
 
 const DetailsScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const scrollViewRef = useRef(null);
   const [isAtTop, setIsAtTop] = useState(true);
-  // const amentitySlice = Amentity.slice(0, 10);
+  
   const handleScroll = (event) => {
     const { contentOffset } = event.nativeEvent;
     setIsAtTop(contentOffset.y === 0);
   };
   const { details, loading } = useSelector((state) => state.hotel);
-
+  const user = useSelector((state) => state.user.details)
+  const profile = useSelector((state)=> state.profile.data)
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: isAtTop ? false : true,
       title: details?.name,
       headerStyle: {
         backgroundColor: "#005DB1",
-        display: isAtTop ? "none" : "flex", // hide header if at the top
+        display: isAtTop ? "none" : "flex", 
       },
       headerTintColor: "white",
     });
   }, [navigation, details, isAtTop]);
 
   useEffect(() => {
-    dispatch(getHotelById(route?.params?.hotelId));
+    dispatch(getHotelById(route?.params?.hotelId)).unwrap()
+    .then((res)=>{
+      dispatch(getUsersById(res.userId))
+      dispatch(getProfileById(res.userId))
+    })
   }, [route.params.hotelId]);
 
   const handleBooking = () => {
     navigation.navigate('RoomScreen', {id: details?.id, hotelId: details?.hotelId})
   };
 
-  // if (loading && details) {
-  //   return <Text>Loadding</Text>;
-  // }
+  const handleMessage = (id) =>{
+    navigation.navigate('MessageScreen', {state:{userId: id}})
+  }
+
+  if (loading) {
+    return <Text>Loadding</Text>;
+  }
   return (
     <>
         {loading && details 
@@ -64,7 +73,6 @@ const DetailsScreen = ({ route, navigation }) => {
         ) 
         : (
           <View style={{ flex: 1 }}>
-      {/* {loading && details ? ('') : ('')} */}
       <ScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
@@ -154,16 +162,33 @@ const DetailsScreen = ({ route, navigation }) => {
               </Text>
             </Pressable>
           </View>
+          <View style={styles.separator} />
+          <View style={{}}>
+              <Text style={styles.textTitle}>Owner Hotel Contact</Text>
+              <View style={{justifyContent:'center', alignItems:'center', flexDirection:'col', marginTop:10}}> 
+              <Image
+                style={{width: 100, height: 100, borderRadius: 60}}
+                source={{
+                  uri: profile?.avatarUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
+                }}
+              />
+                <Text style={{marginTop: 10}}>Email: {user?.email}</Text>
+              <Pressable 
+              style={{marginTop:15, borderWidth: 0, borderRadius: 10, padding:10, backgroundColor:"#005DB1" }}
+              onPress={()=>{handleMessage(profile?.userId)}}
+              >
+                <Text style={{color:'white'}}>Message Now</Text>
+              </Pressable>
+              </View>
+          </View>
         </View>
-        <RoomItem data={details.id}/>
       </ScrollView>
       <View style={styles.footerContainer}>
         <View style={styles.footerPrice}>
           <Text style={styles.textFooter}>Price/1 Room/Night</Text>
-          <Text style={styles.textPriceFooter}> 500USD</Text>
+          <Text style={styles.textPriceFooter}>{details?.rooms?.[0]?.price} USD</Text>
           <Text style={{ marginLeft: 20, color:'white' }}> Last Price</Text>
         </View>
-        {/* <Button title="as" style={styles.Button}/> */}
         <TouchableOpacity style={[styles.Button]} onPress={handleBooking}>
           <Text style={styles.textButton}>Choose Room</Text>
         </TouchableOpacity>

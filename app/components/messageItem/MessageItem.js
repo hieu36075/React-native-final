@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
 export default function MessageItem({ item, user }) {
-    // console.log(item)
 	const status = item.sederId !== user;
 
 	return (

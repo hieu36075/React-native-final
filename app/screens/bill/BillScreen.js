@@ -34,7 +34,6 @@ const BillScreen = ({ navigation, route }) => {
     .then((res)=>{
         dispatch(getHotelById(res.hotelId))
         dispatch(getCategoryRoomById(res.orderdetails[0].roomId))
-        // dispatch()
     })
   }, []);
 
@@ -84,7 +83,7 @@ const BillScreen = ({ navigation, route }) => {
             <Text style={styles.textTicket}> <EvilIcons name="location" size={24} color="green" /> CheckIn : {moment(order.checkIn).format('DD/MM/YY - HH:mm')}</Text>
             <Text style={styles.textTicket}> <EvilIcons name="location" size={24} color="red" /> CheckOut: {moment(order.checkOut).format('DD/MM/YY - HH:mm')}</Text>
             <View style={styles.address}>
-                <Text style={styles.textTicket}>
+                <Text style={[styles.textTicket, {color:'white'}]}>
                 {hotel.address} - {hotel?.city?.name} - {hotel?.country?.name }
                 </Text>
             </View>

@@ -1,12 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import http from "../../service/axios-interceptor"
-import axios from "axios"
 
 export const login = createAsyncThunk('auth/login', async(data, {rejectWithValue})=>{
     try {
-        // console.log(data)
         const reponse = await http.post('/auth/login', data)
-        // console.log(respon)
         return reponse
     } catch (error) {
         if (error.response && error.response.data) {
@@ -14,5 +11,24 @@ export const login = createAsyncThunk('auth/login', async(data, {rejectWithValue
         } else {
             return rejectWithValue("Network Error");
         }
+    }
+})
+
+export const register = createAsyncThunk('auth/register', async(data, {rejectWithValue})=>{
+    try {
+        const {confirmPassword, ...register} = data
+        const reponse = await http.post('auth/register', register)
+        return reponse
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+})
+
+export const resetPassword = createAsyncThunk('auth/resetPassword', async(data, {rejectWithValue})=>{
+    try {
+        const reponse = await http.patch('auth/reset-password', data)
+        return reponse.data
+    } catch (error) {
+        return rejectWithValue(error)
     }
 })

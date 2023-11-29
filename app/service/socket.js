@@ -5,10 +5,7 @@ let _store = store;
 
   const token = _store.getState().auth.token
 
-
-// console.log(token)
-
-const socket = io('http://192.168.1.18:3500', {
+const socket = io('http://192.168.1.17:3500', {
   transportOptions: {
     polling: {
       extraHeaders: {

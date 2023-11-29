@@ -10,6 +10,7 @@ import {formatDateRange, calculateNumberOfDays} from './caculate'
 import { createBill } from "../../redux/payment/paymentThunk";
 import {useStripe} from '@stripe/stripe-react-native';
 import { getHotelById } from "../../redux/hotel/hotelThunks";
+import { ToastAndroid } from "react-native";
 const ConfirmPaymentScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -38,7 +39,7 @@ const ConfirmPaymentScreen = ({navigation, route}) => {
       <Text> loading</Text>
     )
   }
-  const vatRate = 0.1; // 10% VAT
+  const vatRate = 0.1; 
   const serviceRate = 0.05;
   const dateString = formatDateRange(details.checkIn, details.checkOut)
   const numberOfDays = calculateNumberOfDays(details.checkIn, details.checkOut);
@@ -54,10 +55,9 @@ const ConfirmPaymentScreen = ({navigation, route}) => {
       orderId: details?.id
     })).unwrap()
     if(reponse.error){
-      console.log('Something error')
       return
     }
-    //step 2
+
     const { error: paymentSheetError } = await initPaymentSheet({
       merchantDisplayName: 'hieu.dev',
       paymentIntentClientSecret: reponse.clientSecret,
@@ -70,21 +70,19 @@ const ConfirmPaymentScreen = ({navigation, route}) => {
       return
     }
     const result = await presentPaymentSheet();
-    console.log(result)
+
     if(result.error){
-      console.log('chua thanh toan')
+      ToastAndroid.show('Payment error', ToastAndroid.BOTTOM)
       return
     }
-    // if(payment_intent.succeeded){
-    //   console.log('abc')
-    // }
+
       dispatch(confirmOrder(details?.id)).unwrap()
       .then((res)=>{
         navigation.navigate('BillScreen', {id: res.id})
       })
 
  
-    console.log('thanh toan')
+
   }
   return (
     <ScrollView style={styles.mainContainer}>

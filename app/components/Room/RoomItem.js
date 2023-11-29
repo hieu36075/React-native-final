@@ -22,15 +22,6 @@ const RoomItem = ({ id }) => {
       <Text style={{ fontSize: 16, margin: 10 }}>{item.name}</Text>
       {item?.rooms?.map((room) => (
         <View style={styles.containerRoom} key={room.id}>
-          {/* {room.imageRoom.map((image)=>(
-            <Image
-              key={image.id}
-              style={{ width: "100%", aspectRatio: 2 / 3 }}
-              source={{
-                uri: image.url,
-              }}
-          />
-            ))} */}
             <FlatList
               data={room.imageRoom}
               horizontal={true}

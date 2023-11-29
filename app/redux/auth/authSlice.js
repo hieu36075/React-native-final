@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "./authThunks";
+import { login, register, resetPassword } from "./authThunks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState ={
-    isLogin: false, // Đặt giá trị ban đầu là false
+    isLogin: false,
     loading: false,
     error: '',
     token: []
@@ -14,8 +14,6 @@ const authSlice = createSlice({
     initialState,
     reducers:{
         logout:(state,action)=>{
-            // localStorage.removeItem('token')
-            console.log('a')
             AsyncStorage.removeItem('token');
             state.isLogin = false
         },
@@ -24,7 +22,6 @@ const authSlice = createSlice({
         },
         setToken: (state, action)=>{
             state.token = action.payload
-            console.log(state.token)
         }
     },
     extraReducers: builder=>{
@@ -42,19 +39,38 @@ const authSlice = createSlice({
             state.loading= false
             state.error = action.payload
         })
-        // builder.addCase(loginByGoogle.pending,(state,action)=>{
-        //     state.isLogin=true
-        //     state.loading=true
-        // })
-        // builder.addCase(loginByGoogle.fulfilled,(state,action)=>{
-        //     state.isLogin= true
-        //     state.loading=false
-        //     state.token = action.payload
-        // })
-        // builder.addCase(loginByGoogle.rejected, (state,action)=>{
-        //     state.loading= false
-        //     state.error = action.payload
-        // })
+
+        builder.addCase(register.pending,(state,action)=>{
+            state.loading = true;
+            state.error = ''
+        })
+        builder.addCase(register.fulfilled, (state, action) =>{
+            state.loading=false
+        
+            state.token = action.payload
+            state.token = action.payload.access_token
+            AsyncStorage.setItem('token', action.payload.access_token)
+            AsyncStorage.setItem('rfToken', action.payload.refresh_token)
+            state.isLogin= true
+            state.error = ''
+        })
+        builder.addCase(register.rejected, (state,action) =>{
+            state.loading= false
+            state.error = action.payload
+        })
+
+        builder.addCase(resetPassword.pending,(state,action)=>{
+            state.loading = true;
+            state.error = ''
+        })
+        builder.addCase(resetPassword.fulfilled, (state, action) =>{
+            state.loading=  false
+            state.error = ''
+        })
+        builder.addCase(resetPassword.rejected, (state,action) =>{
+            state.loading= false
+            state.error = action.payload
+        })
     }
 });
 

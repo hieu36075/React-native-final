@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
     messaginginputContainer: {
 		width: "100%",
 		minHeight: 100,
-		backgroundColor: "white",
-		paddingVertical: 30,
+		paddingVertical: 25,
 		paddingHorizontal: 15,
 		justifyContent: "center",
 		flexDirection: "row",
+		height:'10%',
 	},
     messaginginput: {
 		borderWidth: 1,

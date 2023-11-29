@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ModalComponent from "../../components/bottomPopup/BottomPopup";
 import { TextInput } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/auth/authSlice";
-const MenuScreen = () => {
+import { Ionicons } from '@expo/vector-icons';
+import { Alert } from 'react-native';
+import { ToastAndroid } from "react-native";
+import { getMyProfile } from "../../redux/profile/profileThunk";
+const MenuScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState("");
-  console.log(password);
+  const profile = useSelector(state => state.profile.data);
+
+  useEffect(()=>{
+    dispatch(getMyProfile())
+  },[])
   const openModal = () => {
     setModalVisible(true);
   };
@@ -21,21 +29,35 @@ const MenuScreen = () => {
   };
 
   const handleOk = () => {
-    // Handle OK button action
     console.log("OK button pressed");
-    closeModal(); // Close the modal
+    closeModal(); 
   };
   const handleOption1 = () => {
-    // Thực hiện chức năng tùy chọn 1
+    navigation.navigate('ProfileScreen')
   };
 
   const handleOption2 = () => {
-    // Thực hiện chức năng tùy chọn 2
+
   };
 
   const handleLogout = () => {
-    dispatch(logout());
-    // Thực hiện chức năng tùy chọn 3
+    Alert.alert(
+      "Confirm Logout",
+      "Are you sure you want to log out?", 
+      [
+          {
+              text: "Cancel",
+              onPress: () => ToastAndroid.show("Cancel Logout", ToastAndroid.SHORT),
+              style: "cancel"
+          },
+          { 
+              text: "OK", 
+              onPress: () => {
+                  dispatch(logout());
+              }
+          }
+      ],
+    );
   };
   return (
     <View style={styles.menu}>
@@ -43,14 +65,13 @@ const MenuScreen = () => {
         <View style={styles.view_image}>
           <Image
             source={{
-              uri: "https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png",
+              uri: profile?.avatarUrl || "https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png",
             }}
             style={styles.image}
           />
         </View>
-        <Text style={styles.email}>Hieu36075@gmail.com</Text>
+        <Text style={styles.email}>{profile?.fullName}</Text>
       </View>
-      {/* <View style={{ backgroundColor: 'lightgray', flex: 1 }}> */}
       <ScrollView>
         <TouchableOpacity onPress={handleOption1} style={styles.touch_option}>
           <AntDesign name="profile" size={24} color="gray" />
@@ -110,10 +131,10 @@ const MenuScreen = () => {
         </ModalComponent>
 
         <TouchableOpacity onPress={handleLogout} style={styles.touch_option}>
-          <Text>Log out</Text>
+          <Ionicons name="exit-outline" size={24} color="black" />
+          <Text style={styles.text_action}>Log out</Text>
         </TouchableOpacity>
 
-        {/* Thêm các TouchableOpacity khác nếu cần */}
       </ScrollView>
       {/* </View> */}
     </View>

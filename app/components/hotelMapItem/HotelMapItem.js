@@ -11,10 +11,13 @@ import styles from "./styles";
 const HotelMapItem = (props) => {
     const hotel = props.hotel
     const width = useWindowDimensions().width;
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+    const goToPostPage = () => {
+      navigation.navigate('DetailsScreen',{hotelId: hotel.id})
+    };
   return (
     <Pressable
-    //   onPress={goToPostPage}
+      onPress={goToPostPage}
       style={[styles.container, { width: width - 60 }]}
     >
       <View style={styles.innerContainer}>

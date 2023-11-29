@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -20,11 +20,9 @@ const OnboardingScreen = () => {
           try {
             const token = await AsyncStorage.getItem('token');
             if (token !== null) {
-              
               const decodedToken = jwt_decode(token)
               const currentDate = new Date().getTime();
               const isTokenExpired = decodedToken.exp * 1000 < currentDate;
-              // store.dispatch(setToken(token))
               store.dispatch(setIsLogin(!isTokenExpired))
             } else {
                 store.dispatch(setIsLogin(false))
@@ -35,7 +33,7 @@ const OnboardingScreen = () => {
           }
         };
         
-        // Gọi hàm để lấy token
+
         getToken();
       },[])
   return (
@@ -53,11 +51,16 @@ const OnboardingScreen = () => {
             fontSize: 30,
             color: '#20315f',
           }}>
-          TravelGreen
+          TravelVietNam
         </Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <FontAwesome5 name="hotel" size={320} color="#4d8bf0" />
+      <Image
+        style={{width:300, height:300, borderRadius: 20}}
+        source={{
+          uri: 'https://logo.com/image-cdn/images/kts928pd/production/9450d7504579af76d04b446909e53aedf0b66950-338x343.png?w=1080&q=72',
+        }}
+      />
       </View>
       <TouchableOpacity
         style={{

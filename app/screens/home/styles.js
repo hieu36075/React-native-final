@@ -46,6 +46,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  textModal:{
+    paddingLeft:20,
+    paddingTop:10,
+    fontWeight: '700',
+    fontSize:24
+  }
 });
 
 export default styles;

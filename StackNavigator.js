@@ -27,108 +27,127 @@ import ChatScreen from "./app/screens/chat/ChatScreen";
 import MessageScreen from "./app/screens/messageScreen/MessageScreen";
 import { Feather } from '@expo/vector-icons';
 import MapListScreen from "./app/screens/mapListScreen/MapListScreen";
-const StackNavigator =() =>{
-    const Tab = createBottomTabNavigator();
-    const {isLogin} = useSelector((state) => state.auth)
-    const Stack = createNativeStackNavigator();
-    function BottomTabs() {
-        return (
-          <Tab.Navigator>
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarLabel: "Home",
-                headerShown: false,
-                tabBarIcon: ({ focused }) =>
-                  focused ? (
-                    <Entypo name="home" size={24} color="#003580" />
-                  ) : (
-                    <AntDesign name="home" size={24} color="black" />
-                  ),
-              }}
-            />
-    
-            <Tab.Screen
-              name="ChatScreen"
-              component={ChatScreen}
-              options={{
-                tabBarLabel: "Saved",
-                headerShown: false,
-                tabBarIcon: ({ focused }) =>
-                  focused ? (
-                    // <Feather name="message-circle" size={24} color="#003580" />
-                    <AntDesign name="message1" size={24} color="#003580" />
-                  ) : (
-                    // <Feather name="message-circle" size={24} color="white" />
-                    <AntDesign name="message1" size={24} color="black" />
-                  ),
-              }}
-            />
-    
-            <Tab.Screen
-              name="Bookings"
-              component={BookingScreen}
-              options={{
-                tabBarLabel: "Bookings",
-                headerShown: false,
-                tabBarIcon: ({ focused }) =>
-                  focused ? (
-                    <Ionicons name="notifications" size={24} color="#003580" />
-                  ) : (
-                    <Ionicons name="notifications-outline" size={24} color="black" />
-                  ),
-              }}
-            />
-    
-            <Tab.Screen
-              name="Menu"
-              component={MenuScreen}
-              options={{
-                tabBarLabel: "Menu",
-                headerShown: false,
-                tabBarIcon: ({ focused }) =>
-                  focused ? (
-                    <Ionicons name="person" size={24} color="#003580" />
-                  ) : (
-                    <Ionicons name="person-outline" size={24} color="black" />
-                  ),
-              }}
-            />
-          </Tab.Navigator>
-        );
-      }
-    return(
-    <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
-        {/* <Header navigation={null} /> */}
-        <FocusedStatusBar backgroundColor="#005DB1"  />
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              {isLogin ? (
-                <>
-                <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
-                <Stack.Screen name="SearchScreen" component={SearchScreen}/>
-                <Stack.Screen name="ListScreen" component={ListScreen}/>
-                <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{headerShown:true}}/>
-                <Stack.Screen name="RoomScreen" component={RoomScreen} options={{headerShown:true}}/>
-                <Stack.Screen name="ConfirmPaymentScreen" component={ConfirmPaymentScreen} options={{headerShown:true}}/>
-                <Stack.Screen name="BillScreen" component={BillScreen} options={{headerShown:true}}/>
-                <Stack.Screen name="ChatScreen" component={ChatScreen}/>
-                <Stack.Screen name="MessageScreen" component={MessageScreen}/>
-                <Stack.Screen name="MapListScreen" component={MapListScreen}/>
+import NotificationSceen from "./app/screens/notification/NotificationScreen";
+import ProfileScreen from "./app/screens/profile/ProfileScreen";
+const StackNavigator = () => {
+  const Tab = createBottomTabNavigator();
+  const { isLogin } = useSelector((state) => state.auth)
+  const Stack = createNativeStackNavigator();
+  function BottomTabs() {
+    return (
+      <Tab.Navigator>
 
-                </>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: "Home",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Entypo name="home" size={24} color="#003580" />
               ) : (
-                <>
-                <Stack.Screen name="OnScreen" component={OnboardingScreen} /> 
-                <Stack.Screen name="Login" component={LoginScreen} />   
-                <Stack.Screen name="Register" component={RegisterScreen} />   
-                </>
-              )}
-            </Stack.Navigator>
-        </NavigationContainer>
+                <AntDesign name="home" size={24} color="black" />
+              ),
+          }}
+        />
+
+        <Tab.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{
+            tabBarLabel: "Message",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <AntDesign name="message1" size={24} color="#003580" />
+              ) : (
+                <AntDesign name="message1" size={24} color="black" />
+              ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Bookings"
+          component={BookingScreen}
+          options={{
+            tabBarLabel: "Bookings",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <AntDesign name="heart" size={24} color="#003580" />
+              ) : (
+                <AntDesign name="hearto" size={24} color="black" />
+              ),
+          }}
+        />
+
+
+
+        <Tab.Screen
+          name="Notification"
+          component={NotificationSceen}
+          options={{
+            tabBarLabel: "Notification",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Ionicons name="notifications" size={24} color="#003580" />
+              ) : (
+                <Ionicons name="notifications-outline" size={24} color="black" />
+              ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Menu"
+          component={MenuScreen}
+          options={{
+            tabBarLabel: "Menu",
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Ionicons name="person" size={24} color="#003580" />
+              ) : (
+                <Ionicons name="person-outline" size={24} color="black" />
+              ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        {/* <Header navigation={null} /> */}
+        <FocusedStatusBar backgroundColor="#005DB1" />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {isLogin ? (
+            <>
+              <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
+              <Stack.Screen name="SearchScreen" component={SearchScreen} />
+              <Stack.Screen name="ListScreen" component={ListScreen} />
+              <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{ headerShown: true }} />
+              <Stack.Screen name="RoomScreen" component={RoomScreen} options={{ headerShown: true }} />
+              <Stack.Screen name="ConfirmPaymentScreen" component={ConfirmPaymentScreen} options={{ headerShown: true }} />
+              <Stack.Screen name="BillScreen" component={BillScreen} options={{ headerShown: true }} />
+              <Stack.Screen name="ChatScreen" component={ChatScreen} />
+              <Stack.Screen name="MessageScreen" component={MessageScreen} />
+              <Stack.Screen name="MapListScreen" component={MapListScreen} />
+              <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="OnScreen" component={OnboardingScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
-    )
+  )
 }
 
 

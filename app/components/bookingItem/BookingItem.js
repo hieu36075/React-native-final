@@ -20,7 +20,7 @@ const BookingItem = ({ data }) => {
     dispatch(getHotelById(data.hotelId))
       .unwrap()
       .then((res) => {
-        // console.log(res)
+  
         setHotel(res);
       });
   }, []);
