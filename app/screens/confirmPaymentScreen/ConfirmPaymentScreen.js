@@ -39,7 +39,7 @@ const ConfirmPaymentScreen = ({navigation, route}) => {
       <Text> loading</Text>
     )
   }
-  const vatRate = 0.1; 
+  const vatRate = 0.05; 
   const serviceRate = 0.05;
   const dateString = formatDateRange(details.checkIn, details.checkOut)
   const numberOfDays = calculateNumberOfDays(details.checkIn, details.checkOut);
@@ -96,7 +96,7 @@ const ConfirmPaymentScreen = ({navigation, route}) => {
             style={{ justifyContent: "space-between", flexDirection: "row" }}
           >
             <Text style={{ marginLeft: 10, marginBottom: 10 }}>{dateString}</Text>
-            <Text style={{ marginRight: 10 }}> Edit</Text>
+            {/* <Text style={{ marginRight: 10 }}> Edit</Text> */}
           </View>
           <Text style={styles.title}>Guest</Text>
           <Text style={{ marginLeft: 10, marginBottom: 10 }}>1 adult</Text>

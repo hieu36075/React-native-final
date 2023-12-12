@@ -16,7 +16,7 @@ import Header from "./app/layout/header";
 import LoginScreen from "./app/screens/LoginScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import OnboardingScreen from "./app/screens/OnboardingScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SearchScreen from "./app/screens/search/SearchScreen";
 import ListScreen from "./app/screens/ListScreen/ListScreen";
 import DetailsScreen from "./app/screens/details/DetailsScreen";
@@ -29,10 +29,23 @@ import { Feather } from '@expo/vector-icons';
 import MapListScreen from "./app/screens/mapListScreen/MapListScreen";
 import NotificationSceen from "./app/screens/notification/NotificationScreen";
 import ProfileScreen from "./app/screens/profile/ProfileScreen";
+import socket from "./app/service/socket";
+import { useEffect } from "react";
+import { addNotification } from "./app/redux/notification/notificationSlice";
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
   const { isLogin } = useSelector((state) => state.auth)
   const Stack = createNativeStackNavigator();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    socket.on("notification", (data) => {
+      dispatch(addNotification(data))
+    });
+
+    return () => {
+      socket.off("notification");
+    };
+}, []);
   function BottomTabs() {
     return (
       <Tab.Navigator>

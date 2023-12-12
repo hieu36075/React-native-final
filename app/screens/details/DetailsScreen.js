@@ -49,8 +49,8 @@ const DetailsScreen = ({ route, navigation }) => {
   useEffect(() => {
     dispatch(getHotelById(route?.params?.hotelId)).unwrap()
     .then((res)=>{
-      dispatch(getUsersById(res.userId))
-      dispatch(getProfileById(res.userId))
+      dispatch(getUsersById(res?.userId))
+      dispatch(getProfileById(res?.userId))
     })
   }, [route.params.hotelId]);
 

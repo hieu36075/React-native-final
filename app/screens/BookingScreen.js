@@ -9,9 +9,12 @@ import BookingItem from '../components/bookingItem/BookingItem';
 const BookingScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const bookings = useSelector((state) => state.order.data)
-  useLayoutEffect(()=>{
-    navigation.setOptions({headerShown: true });
-  },[])
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTintColor: "#2E7CC3",
+    });
+  });
   useEffect(()=>{
     dispatch(getOrderByUserId({page: 1 , perPage :10}))
   },[])

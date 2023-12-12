@@ -10,6 +10,7 @@ import { getNoticationById } from "../../redux/notification/notificationThunks";
 import { FlatList } from "react-native";
 import NotificationItem from "../../components/notification/NotificationItem";
 import { Ionicons } from '@expo/vector-icons';
+import { addNotification } from "../../redux/notification/notificationSlice";
 const NotificationSceen = () =>{
     const dispatch = useDispatch();
     const data = useSelector((state)=> state.notification.data)
@@ -37,7 +38,7 @@ const NotificationSceen = () =>{
     
       useEffect(() => {
           socket.on("notification", (data) => {
-            setNotifications((prevNotifications) => [data, ...prevNotifications]);
+            dispatch(addNotification(data))
           });
 
           return () => {

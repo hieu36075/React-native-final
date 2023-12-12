@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoryRoomByHotel } from "../../redux/categoryRoom/categoryRoomThunks";
+import { filterCategoryRoomByHotel, getCategoryRoomByHotel } from "../../redux/categoryRoom/categoryRoomThunks";
 import styles from "./styles";
 import { useState } from "react";
 import { Octicons } from "@expo/vector-icons";
@@ -35,7 +35,6 @@ const RoomScreen = ({ navigation, route }) => {
   const [endDate, setEndDate] = useState(
     new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
   );
-
   const numDays = 30;
   const dayOptions = Array.from({ length: numDays }, (_, index) => ({
     label: `${index + 1} days`,
@@ -63,6 +62,10 @@ const RoomScreen = ({ navigation, route }) => {
   const onChangeTime = ({ type }, selectedDate) => {
     if (type == "set") {
       const currentDate = selectedDate;
+      const newEndDate = new Date(currentDate);
+      newEndDate.setDate(currentDate.getDate() + 1);
+      setEndDate(newEndDate);
+      setSelectedDay(1);
       setStartDate(currentDate);
       setShowPicker(false);
     } else {
@@ -85,18 +88,18 @@ const RoomScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     dispatch(
-      getCategoryRoomByHotel({
+      filterCategoryRoomByHotel({
         id: id,
-        page: 1,
-        perPage: 5,
+        checkIn: startDate,
+        checkOut: endDate,
       })
     );
-  }, [id]);
+  }, [id, startDate]);
 
   if (loading) {
     return <Text>loading</Text>;
   }
-  const vatRate = 0.1; // 
+  const vatRate = 0.05;  
   const serviceRate = 0.05;
 
 
@@ -107,7 +110,7 @@ const RoomScreen = ({ navigation, route }) => {
     
     const priceChanged = existingOrder.price !== updatedOrder.price;
 
-    return checkInChanged || checkOutChanged || priceChanged/* || ... */;
+    return checkInChanged || checkOutChanged || priceChanged;
   }
 
   const handleChooseRoom = async (roomId, price) => {
@@ -160,7 +163,6 @@ const RoomScreen = ({ navigation, route }) => {
               renderItem={({ item, index }) => {
                 return (
                   <Pressable>
-
                     <Image
                       key={item.id}
                       style={styles.image}
@@ -216,7 +218,7 @@ const RoomScreen = ({ navigation, route }) => {
           >
             <Text style={styles.textFilter}>
               {" "}
-              {moment(startDate).format("DD/HH/YYYY")}
+              {moment(startDate).format("DD/MM/YYYY")}
             </Text>
           </TouchableOpacity>
           {showPicker && (

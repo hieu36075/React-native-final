@@ -21,6 +21,16 @@ export const getCategoryRoomByHotel = createAsyncThunk('categoryRoom/getCategory
     }
 })
 
+export const filterCategoryRoomByHotel = createAsyncThunk('categoryRoom/filterCategoryRoomByHotel', async(data, {rejectWithValue}) =>{
+    try{
+        const {id, checkIn, checkOut} = data;
+        const reponse = await http.get(`/categoryRoom/${id}/available-rooms?checkIn=${checkIn}&checkOut=${checkOut}`);
+        return reponse
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+
 
 export const createCategoryRoom = createAsyncThunk('categoryRoom/createCategoryRoom', async(data, {rejectWithValue}) =>{
     try{

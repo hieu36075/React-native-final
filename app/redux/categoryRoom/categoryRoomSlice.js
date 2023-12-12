@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createCategoryRoom, getCategoryRoom, getCategoryRoomByHotel, getCategoryRoomById } from "./categoryRoomThunks";
+import { createCategoryRoom, filterCategoryRoomByHotel, getCategoryRoom, getCategoryRoomByHotel, getCategoryRoomById } from "./categoryRoomThunks";
 
 
 
@@ -51,6 +51,19 @@ const categoryRoomSlice = createSlice({
                 state.error = ""
             })
             .addCase(getCategoryRoomByHotel.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            .addCase(filterCategoryRoomByHotel.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(filterCategoryRoomByHotel.fulfilled, (state, action) => {
+                state.loading = false
+                state.data = action.payload
+                state.error = ""
+            })
+            .addCase(filterCategoryRoomByHotel.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })

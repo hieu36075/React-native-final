@@ -20,9 +20,7 @@ import Slider from "@react-native-community/slider";
 const ListScreen = ({ route, navigation }) => {
   const { searchQuery } = route.params;
   const dispatch = useDispatch();
-  const [searchResults, setSearchResults] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
-  //   const [loading, setLoading] = useState(true);
   const { list, loading } = useSelector((state) => state.hotel);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,8 +29,8 @@ const ListScreen = ({ route, navigation }) => {
   }, []);
 
   const [searchData, setSearchData] = useState({
-    countryId: "",
-    name: searchQuery,
+    countryId: route.params.countryId || "",
+    name: searchQuery || "",
     categoryId: "",
     occupancy: 1,
     minPrice: 1,

@@ -21,7 +21,6 @@ const MessageScreen = ({ route, navigation }) => {
     const endOfMessagesRef = useRef(null);
     const [roomId, setRoomId] = useState(route?.params.id)
     const { name } = route?.params || {};
-
     const getUsername = async () => {
         try {
             const token = await AsyncStorage.getItem('token');
@@ -69,7 +68,6 @@ const MessageScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         socket.on('newRoom-received', (data) => {
-            console.log(data)
             dispatch(updateNewRoom(data.newRoom))
             if (!roomId) {
                 setRoomId(data?.newRoom?.id)
@@ -87,6 +85,7 @@ const MessageScreen = ({ route, navigation }) => {
             return; 
           }
         if (!roomId) {
+
             socket.emit('messageNative', {
                 content: message,
                 userId: route?.params?.state?.userId,

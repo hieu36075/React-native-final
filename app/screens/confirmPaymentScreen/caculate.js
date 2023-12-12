@@ -11,15 +11,15 @@ export function formatDateRange(checkIn, checkOut) {
   }
 
  export  function calculateNumberOfDays(checkIn, checkOut) {
-    const oneDay = 24 * 60 * 60 * 1000; // Số mili giây trong một ngày
+    const oneDay = 24 * 60 * 60 * 1000; 
   
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
   
-    // Tính toán số mili giây giữa hai ngày
+   
     const differenceInMilliseconds = Math.abs(checkOutDate - checkInDate);
   
-    // Chuyển đổi số mili giây thành số ngày
+   
     const numberOfDays = Math.round(differenceInMilliseconds / oneDay);
   
     return numberOfDays;

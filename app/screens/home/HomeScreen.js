@@ -25,7 +25,6 @@ const HomeScreen = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
-
     })
   }, [])
   useEffect(()=>{
@@ -64,7 +63,8 @@ const HomeScreen = () => {
       dispatch(getHotels({ page: 1, perPage: 5 }))
     }
   }, [useRefresh.isRefreshing])
-  const handleSearch = () => {
+  const handleNearbyutton = () => {
+    navigation.navigate('ListScreen',{countryId: 'clgywnc7h000008l33v1ja5g9'})
   };
   const countries = [
     { id: '1', name: 'Viet Nam' },
@@ -99,7 +99,7 @@ const HomeScreen = () => {
           <Text style={styles.title}>Welcome to Travel</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => console.warn('Explore Btn clicked')}
+            onPress={() => handleNearbyutton()}
           >
             <Text style={styles.buttonText}>Explore nearby stays</Text>
           </TouchableOpacity>

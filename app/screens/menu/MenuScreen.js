@@ -11,33 +11,53 @@ import { Ionicons } from '@expo/vector-icons';
 import { Alert } from 'react-native';
 import { ToastAndroid } from "react-native";
 import { getMyProfile } from "../../redux/profile/profileThunk";
+import { changePassword } from "../../redux/auth/authThunks";
+
 const MenuScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [validationError, setValidationError] = useState("");
+
   const profile = useSelector(state => state.profile.data);
 
   useEffect(()=>{
-    dispatch(getMyProfile())
-  },[])
+    dispatch(getMyProfile());
+  },[]);
+
   const openModal = () => {
     setModalVisible(true);
+    // Reset validation errors when modal is opened
+    setValidationError("");
   };
 
   const closeModal = () => {
     setModalVisible(false);
+    // Reset password fields and validation errors when modal is closed
+    setPassword("");
+    setConfirmPassword("");
+    setNewPassword("");
+    setValidationError("");
   };
 
   const handleOk = () => {
-    console.log("OK button pressed");
-    closeModal(); 
+    // Validate passwords before proceeding
+    if (validatePasswords()) {
+      dispatch(changePassword({password: password, newPassword: newPassword}))
+      closeModal(); 
+    } else {
+      ToastAndroid.show(validationError, ToastAndroid.SHORT);
+    }
   };
+
   const handleOption1 = () => {
-    navigation.navigate('ProfileScreen')
+    navigation.navigate('ProfileScreen');
   };
 
   const handleOption2 = () => {
-
+    // Handle Option 2
   };
 
   const handleLogout = () => {
@@ -59,6 +79,21 @@ const MenuScreen = ({navigation}) => {
       ],
     );
   };
+
+  const validatePasswords = () => {
+    // Add your password validation logic here
+    if (password.length === 0 || confirmPassword.length === 0 || newPassword.length === 0) {
+      setValidationError("All password fields are required");
+      return false;
+    }  
+    if (newPassword !== confirmPassword) {
+      setValidationError("New password and confirm password must match");
+      return false;
+    }
+    // You can add more validation rules as needed
+    return true;
+  };
+
   return (
     <View style={styles.menu}>
       <View style={styles.view_top}>
@@ -78,7 +113,6 @@ const MenuScreen = ({navigation}) => {
           <Text style={styles.text_action}>Profile</Text>
         </TouchableOpacity>
 
-
         <TouchableOpacity onPress={openModal} style={styles.touch_option}>
           <MaterialCommunityIcons
             name="shield-key-outline"
@@ -97,36 +131,32 @@ const MenuScreen = ({navigation}) => {
               <TextInput
                 style={styles.inputs}
                 type="password"
-                placeholder="Password"
+                placeholder="Current Password"
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry
               />
-              
-            </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.inputs}
-                type="password"
-                placeholder="Confirm password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry
-              />
-              
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.inputs}
                 type="password"
                 placeholder="New Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
+                value={newPassword}
+                onChangeText={(text) => setNewPassword(text)}
                 secureTextEntry
               />
-              
             </View>
-            
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputs}
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+                secureTextEntry
+              />
+            </View>
           </View>
         </ModalComponent>
 
@@ -134,9 +164,7 @@ const MenuScreen = ({navigation}) => {
           <Ionicons name="exit-outline" size={24} color="black" />
           <Text style={styles.text_action}>Log out</Text>
         </TouchableOpacity>
-
       </ScrollView>
-      {/* </View> */}
     </View>
   );
 };

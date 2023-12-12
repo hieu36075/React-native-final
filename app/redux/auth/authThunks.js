@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import http from "../../service/axios-interceptor"
+import { ToastAndroid } from "react-native"
 
 export const login = createAsyncThunk('auth/login', async(data, {rejectWithValue})=>{
     try {
@@ -29,6 +30,17 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async(data, 
         const reponse = await http.patch('auth/reset-password', data)
         return reponse.data
     } catch (error) {
+        console.log(error)
+        return rejectWithValue(error)
+    }
+})
+
+export const changePassword = createAsyncThunk('auth/changePassword', async(data, {rejectWithValue})=>{
+    try {
+        const reponse = await http.post('auth/change-pass', data)
+        return reponse
+    } catch (error) {
+        ToastAndroid.show("Wrong password", ToastAndroid.SHORT);
         return rejectWithValue(error)
     }
 })

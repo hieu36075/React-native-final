@@ -1,9 +1,10 @@
 
 import { StyleSheet, Text, View } from "react-native";
 import StackNavigator from "./StackNavigator";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./app/redux/store";
 import { StripeProvider } from '@stripe/stripe-react-native';
+
 ;
 
 
@@ -13,7 +14,6 @@ const STRIPE_KEY =
 
 
 export default function App() {
-
   return (
     <Provider store={store}>
       <StripeProvider publishableKey={STRIPE_KEY}>

@@ -14,10 +14,10 @@ export default function NotificationItem({ item }) {
     const handleNotification = () => {
         switch (item.action) {
           case "action_booking_hotel":
-            navigation.navigate('BillScreen', {id: item.id})
+            navigation.navigate('BillScreen', {id: item?.actionId, type: 'noti'})
             break;
           case "action_create_hotel":
-            navigation.navigate(`DetailsScreen`, {hotelId: item.id});
+            navigation.navigate(`DetailsScreen`, {hotelId: item?.actionId});
             break;
     
           default:

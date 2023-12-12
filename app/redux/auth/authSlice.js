@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, resetPassword } from "./authThunks";
+import { changePassword, login, register, resetPassword } from "./authThunks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState ={
@@ -68,6 +68,19 @@ const authSlice = createSlice({
             state.error = ''
         })
         builder.addCase(resetPassword.rejected, (state,action) =>{
+            state.loading= false
+            state.error = action.payload
+        })
+
+        builder.addCase(changePassword.pending,(state,action)=>{
+            state.loading = true;
+            state.error = ''
+        })
+        builder.addCase(changePassword.fulfilled, (state, action) =>{
+            state.loading=  false
+            state.error = ''
+        })
+        builder.addCase(changePassword.rejected, (state,action) =>{
             state.loading= false
             state.error = action.payload
         })

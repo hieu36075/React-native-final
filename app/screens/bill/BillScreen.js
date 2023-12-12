@@ -2,7 +2,7 @@ import { ScrollView } from "react-native";
 import { Text } from "react-native";
 import { View } from "react-native";
 import styles from "./styles";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { getOrderById } from "../../redux/order/orderThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelById } from "../../redux/hotel/hotelThunks";
@@ -13,12 +13,15 @@ import { EvilIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import paidImg from './../../assets/images/test.png'
 import { Image } from "react-native";
+import { BackHandler } from 'react-native';
+
 const BillScreen = ({ navigation, route }) => {
-  const id = route?.params?.id || "cln43fq3o0006c3qg6pw0d3rp";
+  const id = route?.params?.id;
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.details)
   const hotel = useSelector((state) => state.hotel.details)
   const roomType = useSelector((state) => state.categoryRoom.detail)
+  const [isMounted, setIsMounted] = useState(true);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -30,13 +33,39 @@ const BillScreen = ({ navigation, route }) => {
     });
   });
   useEffect(() => {
-    dispatch(getOrderById(id)).unwrap()
-    .then((res)=>{
-        dispatch(getHotelById(res.hotelId))
-        dispatch(getCategoryRoomById(res.orderdetails[0].roomId))
-    })
-  }, []);
+    if (isMounted && id) {
+      dispatch(getOrderById(id))
+        .unwrap()
+        .then((res) => {
+          dispatch(getHotelById(res.hotelId));
+          dispatch(getCategoryRoomById(res.orderdetails[0].roomId));
+        });
+    }
+  
+    return () => {
+      setIsMounted(false);
+    };
+  }, [id, isMounted]);
+  useEffect(() => {
 
+    const handleBackPress = () => {
+
+      if(route?.params?.type ==='noti'){
+        navigation.navigate('Notification'); 
+        return true
+      }
+      navigation.navigate('Home'); 
+      return true; 
+    };
+  
+  
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+  
+ 
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, [route?.params?.type]);
   return (
     <>
       <ScrollView style={styles.billContainer}>

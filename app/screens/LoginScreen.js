@@ -8,7 +8,6 @@ import InputField from '../components/InputField';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetPassword } from '../redux/auth/authThunks';
 import { ToastAndroid } from 'react-native';
-// import Auth from '../components/auth/Auth';
 
 
 const LoginScreen = ({ navigation }) => {
